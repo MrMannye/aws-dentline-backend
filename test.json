@@ -1,0 +1,14 @@
+{
+	"data": [
+		{
+			"id_dentista": 1,
+			"nombre": "Dr. Juan Pérez",
+			"especializacion": "Ortodoncia",
+			"telefono": "555-1234",
+			"email": "juan.perez@dentista.com",
+			"numero_tarjeta": "1234567890123456",
+			"cuenta_clabe": "CL1234567890123456",
+			"wallet_address": "0xAbC1234567890DeF"
+		}
+	]
+}

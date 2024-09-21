@@ -1,19 +1,21 @@
 import express from 'express'
 import dentistRouter from './components/dentist/router'
+import dotenv from 'dotenv'
 
-const PORT = 5000
+dotenv.config()
+
 const app = express()
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 
-app.use('/dentist', dentistRouter)
+app.use('/dentista', dentistRouter)
 
 app.get("/", (_, res) => [
-  res.send("Hello, World!")
+	res.send("Hello, World!")
 ])
 
-app.listen(PORT, () => {
-  console.log('Server is running on port 5000')
+app.listen(5000, () => {
+	console.log('Server is running on port 5000')
 })
