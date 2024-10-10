@@ -1,5 +1,6 @@
 import express from 'express'
 import dentistRouter from './components/dentist/router'
+import pacientsRouter from './components/pacients/router'
 import dotenv from 'dotenv'
 
 dotenv.config()
@@ -10,7 +11,9 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 
-app.use('/dentista', dentistRouter)
+app.use('/dentist', dentistRouter)
+app.use('/pacients', pacientsRouter);
+
 
 app.get("/", (_, res) => [
 	res.send("Hello, World!")
