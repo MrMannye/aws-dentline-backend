@@ -1,4 +1,4 @@
-import {getPacientProfileById, updatePacientProfileById, getHistoryPacientById, getVitalSignsById, updateVitalSignsById} from './database';
+import {getPacientProfileById, updatePacientProfileById, getHistoryPacientById, getVitalSignsById, updateVitalSignsById, postPacientRecapDate, postPacientRecapDateTreatment, getDateByIdDate} from './database';
 
 export const getPacientProfile = async (idPacient: string) => {
 	try {
@@ -27,6 +27,15 @@ export const getVitalSigns = async (idPacient: string) => {
 	}
 }
 
+export const getDateById = async (id_cita: string) => {
+	try {
+		const DateByIdDate = getDateByIdDate(id_cita)
+		return DateByIdDate
+	} catch (error) {
+		return error
+	}
+}
+
 interface PacientData {
 	id_paciente: string,
 	direccion: string, 
@@ -37,26 +46,45 @@ interface PacientData {
 
 export const putPacientProfile = async ({id_paciente, direccion, profesion, edad, estado_civil}: PacientData) => {
 	try {
-		const pacient = updatePacientProfileById(direccion, profesion, edad, estado_civil, id_paciente)
-		return pacient
+		const profile = updatePacientProfileById(direccion, profesion, edad, estado_civil, id_paciente)
+		return profile
 	} catch (error) {
 		return error
 	}
 }
 interface VitalSignsData {
 	tipo_sangre: string,
-	estatura: number, 
+	antecedentes_medicos: number, 
 	peso: number, 
 	pulso: number, 
 	presion: number, 
-	temperatura: number,
+	alergias: number,
 	id_paciente: string
 }
 
-export const putVitalSigns = async ({tipo_sangre, estatura, peso, pulso, presion, temperatura, id_paciente}: VitalSignsData) => {
+export const putVitalSigns = async ({tipo_sangre, antecedentes_medicos, peso, pulso, presion, alergias, id_paciente}: VitalSignsData) => {
 	try {
-		const pacient = updateVitalSignsById(tipo_sangre, estatura, peso, pulso, presion, temperatura, id_paciente)
-		return pacient
+		const updateVitalSigns = updateVitalSignsById(tipo_sangre, antecedentes_medicos, peso, pulso, presion, alergias, id_paciente)
+		return updateVitalSigns
+	} catch (error) {
+		return error
+	}
+}
+
+interface RecapData {
+	id_paciente: string, 
+	id_dentista: string, 
+	fecha_cita: string, 
+	motivo: string, 
+	costo_total: string,
+	observaciones: string
+}
+
+export const postRecapDate = async ({id_paciente, id_dentista, fecha_cita, motivo, costo_total, observaciones}: RecapData) => {
+	try {
+		const recapDate = postPacientRecapDate(id_paciente, id_dentista, fecha_cita, motivo, costo_total,observaciones);
+		const recapDateTreatment = postPacientRecapDateTreatment(id_paciente, id_dentista, motivo, costo_total)
+		return [recapDate, recapDateTreatment]
 	} catch (error) {
 		return error
 	}

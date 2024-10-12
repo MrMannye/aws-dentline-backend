@@ -1,5 +1,5 @@
 import express from 'express'
-import { getPacientProfile, putPacientProfile, getHistoryPacient, getVitalSigns, putVitalSigns} from './controller'
+import { getPacientProfile, putPacientProfile, getHistoryPacient, getVitalSigns, putVitalSigns, postRecapDate, getDateById} from './controller'
 
 const router = express.Router()
 
@@ -30,7 +30,16 @@ router.get('/vitalSigns/:id', async (req, res) => {
 	}
 })
 
-router.put('/udatePacientProfile', async (req, res) => {
+router.get('/getDateById/:id', async (req, res) => {
+	try {
+		const result = await getDateById(req.params.id)
+		res.status(200).json({ data: result })
+	} catch (error) {
+
+	}
+})
+
+router.put('/updatePacientProfile', async (req, res) => {
 	try {
 		const result = await putPacientProfile(req.body)
 		res.status(200).json({ data: result })
@@ -39,9 +48,18 @@ router.put('/udatePacientProfile', async (req, res) => {
 	}
 })
 
-router.put('/udateVitalSigns', async (req, res) => {
+router.put('/updateVitalSigns', async (req, res) => {
 	try {
 		const result = await putVitalSigns(req.body)
+		res.status(200).json({ data: result })
+	} catch (error) {
+
+	}
+})
+
+router.post('/postRecapDate', async (req, res) => {
+	try {
+		const result = await postRecapDate(req.body)
 		res.status(200).json({ data: result })
 	} catch (error) {
 
