@@ -1,11 +1,20 @@
 import express from 'express'
-import { getDentist, postDentist, putDentist, getNextDates, getAllPacients, getAllDates, getAllDatesRecap} from './controller'
+import { getDentist, postDentist, putDentist, getNextDates, getAllPacients, getAllDates, getAllDatesRecap, getValidDentist} from './controller'
 
 const router = express.Router()
 
 router.get('/:id', async (req, res) => {
 	try {
 		const result = await getDentist(req.params.id)
+		res.status(200).json({ data: result })
+	} catch (error) {
+
+	}
+})
+
+router.get('/validDentist/:wallet_address', async (req, res) => {
+	try {
+		const result = await getValidDentist(req.params.wallet_address)
 		res.status(200).json({ data: result })
 	} catch (error) {
 

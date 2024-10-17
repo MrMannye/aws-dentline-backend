@@ -1,4 +1,4 @@
-import { getDentistById, getNextDatesById, getPacients , addDentist, updateDentistById, getAllDatesById, getAllDatesRecapById} from "./database"
+import { getDentistById, getNextDatesById, getPacients , addDentist, updateDentistById, getAllDatesById, getAllDatesRecapById, getValidDentistByWallet, addNewDentistByWallet} from "./database"
 
 export const getDentist = async (idDentist: string) => {
 	try {
@@ -44,6 +44,19 @@ export const getAllDatesRecap = async (idDentist: string) => {
 		return error
 	}
 }
+
+export const getValidDentist = async (wallet_address: string) => {
+  try {
+    const validDentist:any = await getValidDentistByWallet(wallet_address);
+		
+    if (validDentist[0].wallet_address.length > 0) {
+      return validDentist;
+    } 
+  } catch (error) {
+		const addDentist = await addNewDentistByWallet (wallet_address);
+    return addDentist;
+  }
+};
 
 export const postDentist = async (idDentist: string) => {
 	try {
