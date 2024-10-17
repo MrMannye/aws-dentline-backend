@@ -3,6 +3,9 @@ import { getDentistById, addDentist, updateDentistById } from "./database"
 
 export const getDentist = async (idDentist: string) => {
 	try {
+		if (!idDentist) {
+			throw new Error('Id is required')
+		}
 		const dentist = getDentistById(idDentist)
 		return dentist
 	} catch (error) {

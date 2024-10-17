@@ -20,7 +20,7 @@ export const addDentist = async (idDentist: string) => {
 
 export const updateDentistById = async (idDentist: string) => {
 	try {
-		const [rows, _fields] = await db.query(`SELECT * FROM dentistas WHERE id_dentista = ?`, [idDentist])
+		const [rows, _fields] = await db.query(`UPDATE * FROM dentistas WHERE id_dentista = ?`, [idDentist])
 		return rows
 	} catch (error) {
 		return error
