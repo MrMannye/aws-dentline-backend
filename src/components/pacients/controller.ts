@@ -1,13 +1,22 @@
 import {getPacientProfileById, updatePacientProfileById, getHistoryPacientById, getVitalSignsById, updateVitalSignsById, postPacientRecapDate, postPacientRecapDateTreatment, getDateByIdDate} from './database';
 
+const secretKey: string = process.env.SECRET_KEY_PACIENTS || 'jkl_mno_pqr';
+
 export const getPacientProfile = async (idPacient: string) => {
-	try {
-		const allPacients = getPacientProfileById(idPacient)
-		return allPacients
-	} catch (error) {
-		return error
-	}
-}
+  try {
+    const allPacients: any = await getPacientProfileById(idPacient);
+
+    // Desencriptar la dirección
+    if (allPacients[0].direccion) {
+      const bytesDireccion = CryptoJS.AES.decrypt(allPacients[0].direccion, secretKey);
+      allPacients[0].direccion = bytesDireccion.toString(CryptoJS.enc.Utf8);
+    }
+
+    return allPacients;
+  } catch (error) {
+    return error;
+  }
+};
 
 export const getHistoryPacient = async (idPacient: string) => {
 	try {
@@ -44,14 +53,18 @@ interface PacientData {
   estado_civil: string
 }
 
-export const putPacientProfile = async ({id_paciente, direccion, profesion, edad, estado_civil}: PacientData) => {
-	try {
-		const profile = updatePacientProfileById(direccion, profesion, edad, estado_civil, id_paciente)
-		return profile
-	} catch (error) {
-		return error
-	}
+export const putPacientProfile = async ({ id_paciente, direccion, profesion, edad, estado_civil }: PacientData) => {
+  try {
+    // Encriptar la dirección antes de almacenarla
+    const encryptedDireccion = CryptoJS.AES.encrypt(direccion, secretKey).toString();
+
+    const profile = await updatePacientProfileById(encryptedDireccion, profesion, edad, estado_civil, id_paciente);
+    return profile;
+  } catch (error) {
+    return error;
+  }
 }
+
 interface VitalSignsData {
 	tipo_sangre: string,
 	antecedentes_medicos: number, 

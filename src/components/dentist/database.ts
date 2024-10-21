@@ -132,7 +132,7 @@ export const updateDentistById = async (nombre: string, especializacion: string,
 					wallet_address = ?
 			WHERE 
 					id_dentista = ?;
-			`, [ nombre, especializacion, telefono, email, numero_tarjeta, cuenta_clabe, wallet_address,idDentist])
+			`, [ nombre, especializacion, telefono, email, numero_tarjeta, cuenta_clabe, wallet_address, idDentist])
 		return rows
 	} catch (error) {
 		return error
