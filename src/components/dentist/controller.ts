@@ -60,11 +60,15 @@ export const getValidDentist = async (wallet_address: string) => {
 			validDentist[0].wallet_address = bytesWallet.toString(CryptoJS.enc.Utf8);
 			return validDentist;
 		}
+		
 	} catch (error) {
 		// Cifrar wallet_address antes de guardar un nuevo dentista
+		console.log("hola")
 		const encryptedWallet = CryptoJS.AES.encrypt(wallet_address, secretKey).toString();
 		const addDentist = await addNewDentistByWallet(encryptedWallet);
-		return addDentist;
+		console.log(addDentist);
+		const validDentist: any = await getValidDentistByWallet(encryptedWallet);
+		return validDentist;
 	}
 };
 
