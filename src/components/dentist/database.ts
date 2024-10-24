@@ -86,6 +86,29 @@ export const getAllDatesRecapById = async (idDentist: string) => {
 	}
 }
 
+export const getValidDentistByWallet = async (wallet_address: string) => {
+	try {
+		const [rows, _fields] = await db.query(`
+			SELECT * FROM dentistas WHERE wallet_address = ?
+      `, [wallet_address])
+		return rows
+	} catch (error) {
+		return error
+	}
+}
+
+export const addNewDentistByWallet = async (wallet_address: string) => {
+	try {
+		const [rows, _fields] = await db.query(`
+			INSERT INTO dentistas (nombre, especializacion, telefono, email, numero_tarjeta, cuenta_clabe, wallet_address)
+      VALUES ('', '', '', '', '', '', ?)
+      `, [wallet_address])
+		return rows
+	} catch (error) {
+		return error
+	}
+}
+
 export const addDentist = async (idDentist: string) => {
 	try {
 		const [rows, _fields] = await db.query(`SELECT * FROM dentistas WHERE id_dentista = ?`, [idDentist])
