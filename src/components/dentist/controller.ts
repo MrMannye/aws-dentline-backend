@@ -1,7 +1,4 @@
 import { getDentistById, getNextDatesById, getPacients, addDentist, updateDentistById, getAllDatesById, getAllDatesRecapById, getValidDentistByWallet, addNewDentistByWallet } from "./database"
-import CryptoJS from 'crypto-js';
-
-const secretKey: string = process.env.SECRET_KEY_DENTIST || 'abc_def_ghi';
 
 export const getDentist = async (idDentist: string) => {
 	try {
@@ -50,25 +47,19 @@ export const getAllDatesRecap = async (idDentist: string) => {
 
 export const getValidDentist = async (wallet_address: string) => {
 	try {
-		// Cifrar el wallet_address antes de consultar
-		const encryptedWallet = CryptoJS.AES.encrypt(wallet_address, secretKey).toString();
-		const validDentist: any = await getValidDentistByWallet(encryptedWallet);
 
-		if (validDentist[0].wallet_address.length > 0) {
-			// Desencriptar el wallet_address antes de devolverlo
-			const bytesWallet = CryptoJS.AES.decrypt(validDentist[0].wallet_address, secretKey);
-			validDentist[0].wallet_address = bytesWallet.toString(CryptoJS.enc.Utf8);
+		const validDentist: any = await getValidDentistByWallet(wallet_address);
+		if (validDentist.length) {
+			return validDentist;
+		} else {
+			await addNewDentistByWallet(wallet_address);
+			const validDentist: any = await getValidDentistByWallet(wallet_address);
+			console.log(validDentist)
 			return validDentist;
 		}
-		
 	} catch (error) {
-		// Cifrar wallet_address antes de guardar un nuevo dentista
-		console.log("hola")
-		const encryptedWallet = CryptoJS.AES.encrypt(wallet_address, secretKey).toString();
-		const addDentist = await addNewDentistByWallet(encryptedWallet);
-		console.log(addDentist);
-		const validDentist: any = await getValidDentistByWallet(encryptedWallet);
-		return validDentist;
+		// Return error if there is no valid dentist
+		return error
 	}
 };
 
