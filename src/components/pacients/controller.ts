@@ -7,9 +7,9 @@ export const getPacientProfile = async (idPacient: string) => {
     const allPacients: any = await getPacientProfileById(idPacient);
 
     // Desencriptar la dirección
-    if (allPacients[0].direccion) {
-      const bytesDireccion = CryptoJS.AES.decrypt(allPacients[0].direccion, secretKey);
-      allPacients[0].direccion = bytesDireccion.toString(CryptoJS.enc.Utf8);
+    if (allPacients.direccion) {
+      const bytesDireccion = CryptoJS.AES.decrypt(allPacients.direccion, secretKey);
+      allPacients.direccion = bytesDireccion.toString(CryptoJS.enc.Utf8);
     }
 
     return allPacients;

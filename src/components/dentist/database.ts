@@ -34,13 +34,15 @@ export const getPacients = async (idDentist: string) => {
 	try {
 		const [rows, _fields] = await db.query(`
       SELECT 
-        pacientes.nombre AS nombre_paciente
+        pacientes.nombre AS nombre_paciente,
+				pacientes.id_paciente
       FROM 
         pacientes
       JOIN 
         dentistas ON pacientes.id_dentista = dentistas.id_dentista
       WHERE 
-        dentistas.id_dentista = ?;
+        dentistas.id_dentista = ?
+				ORDER BY nombre_paciente ASC;
       `, [idDentist])
 		return rows
 	} catch (error) {
