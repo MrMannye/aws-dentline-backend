@@ -1,3 +1,4 @@
+
 import db from '../../database'
 
 export const getPacientProfileById = async (idPacient: string) => {
@@ -73,7 +74,7 @@ export const getHistoryPacientById = async (idPacient: string) => {
 	}
 }
 
-export const updatePacientProfileById = async (direccion: string, profesion: string, edad: number,  estado_civil:string, idPacient: string) => {
+export const updatePacientProfileById = async (direccion: string, profesion: string, edad: number, estado_civil: string, idPacient: string) => {
 	try {
 		const [rows, _fields] = await db.query(`
             UPDATE 
@@ -85,14 +86,14 @@ export const updatePacientProfileById = async (direccion: string, profesion: str
                 estado_civil = ?
             WHERE 
                 id_paciente = ?;
-            `, [direccion,profesion,edad,estado_civil,idPacient])
+            `, [direccion, profesion, edad, estado_civil, idPacient])
 		return rows
 	} catch (error) {
 		return error
 	}
 }
 
-export const updateVitalSignsById = async (tipo_sangre: string, antecedentes_medicos: number, peso: number,  pulso: number, presion: number, alergias: number, id_paciente: string) => {
+export const updateVitalSignsById = async (tipo_sangre: string, antecedentes_medicos: number, peso: number, pulso: number, presion: number, alergias: number, id_paciente: string) => {
 	try {
 		const [rows, _fields] = await db.query(`
             UPDATE 
@@ -113,12 +114,12 @@ export const updateVitalSignsById = async (tipo_sangre: string, antecedentes_med
 	}
 }
 
-export const postPacientRecapDate = async (id_paciente: string, id_dentista: string, fecha_cita: string, motivo: string, costo_total: string,observaciones: string) => {
+export const postPacientRecapDate = async (id_paciente: string, id_dentista: string, fecha_cita: string, motivo: string, costo_total: string, observaciones: string) => {
 	try {
 		const [rows, _fields] = await db.query(`
             INSERT INTO citas (id_paciente, id_dentista, fecha_cita, motivo, costo_total, observaciones)
             VALUES (?, ?, ?, ?, ?);
-            `, [id_paciente, id_dentista, fecha_cita, motivo, costo_total,observaciones])
+            `, [id_paciente, id_dentista, fecha_cita, motivo, costo_total, observaciones])
 		return rows
 	} catch (error) {
 		return error

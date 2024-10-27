@@ -1,5 +1,5 @@
 import express from 'express'
-import { getPacientProfile, putPacientProfile, getHistoryPacient, getVitalSigns, putVitalSigns, postRecapDate, getDateById} from './controller'
+import { getPacientProfile, putPacientProfile, getHistoryPacient, getVitalSigns, putVitalSigns, postRecapDate, getDateById } from './controller'
 
 const router = express.Router()
 
