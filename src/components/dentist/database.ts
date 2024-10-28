@@ -74,6 +74,8 @@ export const getAllDatesRecapById = async (idDentist: string) => {
 					p.nombre AS nombre_paciente,
 					c.fecha_cita,
 					c.costo_total,
+					observaciones,
+					
 					TIME(c.fecha_cita) AS hora_cita
 			FROM 
 					pacientes p

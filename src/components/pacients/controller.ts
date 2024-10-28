@@ -8,7 +8,7 @@ export const getPacientProfile = async (idPacient: string) => {
 
 		// Desencriptar la dirección
 		if (allPacients.direccion) {
-			const bytesDireccion = CryptoJS.AES.decrypt(allPacients.direccion, secretKey);
+			const bytesDireccion = CryptoJS.AES.decrypt(allPacients.direccion, secretKey); 
 			allPacients.direccion = bytesDireccion.toString(CryptoJS.enc.Utf8);
 		}
 
@@ -64,7 +64,7 @@ export const putPacientProfile = async ({ id_paciente, direccion, profesion, eda
 
 interface VitalSignsData {
 	tipo_sangre: string,
-	antecedentes_medicos: number,
+	antecedentes_medicos: string,
 	peso: number,
 	pulso: number,
 	presion: number,

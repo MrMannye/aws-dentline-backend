@@ -52,9 +52,15 @@ export const getDateByIdDate = async (id_cita: string) => {
                 c.motivo,
                 c.costo_total,
                 c.fecha_cita,
-                c.abono
+                c.abono,
+                c.observaciones,
+                p.nombre,
+                p.telefono,
+                p.email
             FROM 
                 citas c
+            JOIN 
+                pacientes p ON c.id_paciente = p.id_paciente
             WHERE 
                 c.id_cita = ?;
             `, [id_cita])
@@ -93,7 +99,7 @@ export const updatePacientProfileById = async (direccion: string, profesion: str
 	}
 }
 
-export const updateVitalSignsById = async (tipo_sangre: string, antecedentes_medicos: number, peso: number, pulso: number, presion: number, alergias: number, id_paciente: string) => {
+export const updateVitalSignsById = async (tipo_sangre: string, antecedentes_medicos: string, peso: number, pulso: number, presion: number, alergias: number, id_paciente: string) => {
 	try {
 		const [rows, _fields] = await db.query(`
             UPDATE 
