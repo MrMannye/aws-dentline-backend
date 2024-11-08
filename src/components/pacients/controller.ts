@@ -1,4 +1,4 @@
-import { getPacientProfileById, updatePacientProfileById, getHistoryPacientById, getVitalSignsById, updateVitalSignsById, postPacientRecapDate, postPacientRecapDateTreatment, getDateByIdDate } from './database';
+import { getPacientProfileById, updatePacientProfileById, getHistoryPacientById, getVitalSignsById, updateVitalSignsById, postPacientRecapDate, postPacientRecapDateTreatment, getDateByIdDate, postVitalSignsById } from './database';
 
 const secretKey: string = process.env.SECRET_KEY_PACIENTS || 'jkl_mno_pqr';
 
@@ -74,8 +74,21 @@ interface VitalSignsData {
 
 export const putVitalSigns = async ({ tipo_sangre, antecedentes_medicos, peso, pulso, presion, alergias, id_paciente }: VitalSignsData) => {
 	try {
-		const updateVitalSigns = updateVitalSignsById(tipo_sangre, antecedentes_medicos, peso, pulso, presion, alergias, id_paciente)
-		return updateVitalSigns
+		const updateVitalSigns: any = await updateVitalSignsById(tipo_sangre, antecedentes_medicos, peso, pulso, presion, alergias, id_paciente);
+		if (updateVitalSigns.affectedRows != 0) {
+			return updateVitalSigns;
+		} else {
+			return await postVitalSignsById(tipo_sangre, antecedentes_medicos, peso, pulso, presion, alergias, id_paciente); 
+		}
+	} catch (error) {
+		return error
+	}
+}
+
+export const postVitalSigns = async ({ tipo_sangre, antecedentes_medicos, peso, pulso, presion, alergias, id_paciente }: VitalSignsData) => {
+	try {
+		const postVitalSigns = postVitalSignsById(tipo_sangre, antecedentes_medicos, peso, pulso, presion, alergias, id_paciente)
+		return postVitalSigns
 	} catch (error) {
 		return error
 	}

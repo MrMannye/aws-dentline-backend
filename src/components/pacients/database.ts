@@ -1,4 +1,5 @@
 
+import { QueryResult } from 'mysql2'
 import db from '../../database'
 
 export const getPacientProfileById = async (idPacient: string) => {
@@ -99,7 +100,7 @@ export const updatePacientProfileById = async (direccion: string, profesion: str
 	}
 }
 
-export const updateVitalSignsById = async (tipo_sangre: string, antecedentes_medicos: string, peso: number, pulso: number, presion: number, alergias: number, id_paciente: string) => {
+export const updateVitalSignsById = async (tipo_sangre: string, antecedentes_medicos: string, peso: number, pulso: number, presion: number, alergias: number, id_paciente: string) : Promise<QueryResult | any> => {
 	try {
 		const [rows, _fields] = await db.query(`
             UPDATE 
@@ -114,6 +115,18 @@ export const updateVitalSignsById = async (tipo_sangre: string, antecedentes_med
             WHERE 
                 id_paciente = ?;
             `, [tipo_sangre, antecedentes_medicos, peso, pulso, presion, alergias, id_paciente])
+		return rows
+	} catch (error) {
+		return error
+	}
+}
+
+export const postVitalSignsById = async (tipo_sangre: string, antecedentes_medicos: string, peso: number, pulso: number, presion: number, alergias: number, id_paciente: string) => {
+	try {
+		const [rows, _fields] = await db.query(`
+            INSERT INTO signosvitales (id_paciente, tipo_sangre, antecedentes_medicos, peso, pulso, presion, alergias)
+            VALUES (?,?,?,?,?,?,?);
+            `, [id_paciente, tipo_sangre, antecedentes_medicos, peso, pulso, presion, alergias])
 		return rows
 	} catch (error) {
 		return error

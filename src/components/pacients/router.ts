@@ -50,6 +50,7 @@ router.put('/updatePacientProfile', async (req, res) => {
 
 router.put('/updateVitalSigns', async (req, res) => {
 	try {
+		console.log(req.body)
 		const result = await putVitalSigns(req.body)
 		res.status(200).json({ data: result })
 	} catch (error) {
