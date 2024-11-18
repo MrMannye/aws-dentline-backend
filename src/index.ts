@@ -1,6 +1,7 @@
 import express from 'express'
 import dentistRouter from './components/dentist/router'
 import pacientsRouter from './components/pacients/router'
+import datesRouter from './components/dates/router'
 import dotenv from 'dotenv'
 import cors from 'cors'
 
@@ -15,6 +16,7 @@ app.use(express.urlencoded({ extended: true }))
 
 app.use('/dentist', dentistRouter)
 app.use('/pacients', pacientsRouter);
+app.use('/dates', datesRouter);
 
 
 app.get("/", (_, res) => [
