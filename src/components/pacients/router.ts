@@ -60,6 +60,7 @@ router.put('/updateVitalSigns', async (req, res) => {
 
 router.post('/postRecapDate', async (req, res) => {
 	try {
+		console.log(req.body)
 		const result = await postRecapDate(req.body)
 		res.status(200).json({ data: result })
 	} catch (error) {

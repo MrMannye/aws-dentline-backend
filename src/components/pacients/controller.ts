@@ -96,17 +96,18 @@ export const postVitalSigns = async ({ tipo_sangre, antecedentes_medicos, peso, 
 
 interface RecapData {
 	id_paciente: string,
-	id_dentista: string,
+	id_dentista: number,
 	fecha_cita: string,
 	motivo: string,
-	costo_total: string,
+	costo_total: number,
 	observaciones: string
 }
 
 export const postRecapDate = async ({ id_paciente, id_dentista, fecha_cita, motivo, costo_total, observaciones }: RecapData) => {
 	try {
-		const recapDate = postPacientRecapDate(id_paciente, id_dentista, fecha_cita, motivo, costo_total, observaciones);
-		const recapDateTreatment = postPacientRecapDateTreatment(id_paciente, id_dentista, motivo, costo_total)
+		const recapDate = await postPacientRecapDate(id_paciente, id_dentista, fecha_cita, motivo, costo_total, observaciones);
+		const recapDateTreatment = await postPacientRecapDateTreatment(id_paciente, id_dentista, motivo, costo_total)
+		console.log(recapDate)
 		return [recapDate, recapDateTreatment]
 	} catch (error) {
 		return error

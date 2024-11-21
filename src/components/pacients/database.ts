@@ -133,19 +133,20 @@ export const postVitalSignsById = async (tipo_sangre: string, antecedentes_medic
 	}
 }
 
-export const postPacientRecapDate = async (id_paciente: string, id_dentista: string, fecha_cita: string, motivo: string, costo_total: string, observaciones: string) => {
+export const postPacientRecapDate = async (id_paciente: string, id_dentista: number, fecha_cita: string, motivo: string, costo_total: number, observaciones: string) => {
 	try {
 		const [rows, _fields] = await db.query(`
             INSERT INTO citas (id_paciente, id_dentista, fecha_cita, motivo, costo_total, observaciones)
-            VALUES (?, ?, ?, ?, ?);
-            `, [id_paciente, id_dentista, fecha_cita, motivo, costo_total, observaciones])
+            VALUES (?, ?, ?, ?, ?, ?);
+            `, [parseInt(id_paciente), id_dentista, fecha_cita, motivo, costo_total, observaciones])
+            console.log(rows)
 		return rows
 	} catch (error) {
 		return error
 	}
 }
 
-export const postPacientRecapDateTreatment = async (id_paciente: string, id_dentista: string, motivo: string, costo_total: string) => {
+export const postPacientRecapDateTreatment = async (id_paciente: string, id_dentista: number, motivo: string, costo_total: number) => {
 	try {
 		const [rows, _fields] = await db.query(`
             INSERT INTO citas_tratamientos (id_cita, motivo, costo_total)
