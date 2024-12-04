@@ -82,7 +82,9 @@ export const getAllDatesRecapById = async (idDentist: string) => {
 			JOIN 
 					citas c ON p.id_paciente = c.id_paciente
 			WHERE 
-					c.id_dentista = ?;
+					c.id_dentista = ?
+			AND
+					c.abono <> c.costo_total;
       `, [idDentist])
 		return rows
 	} catch (error) {

@@ -100,7 +100,7 @@ export const updatePacientProfileById = async (direccion: string, profesion: str
 	}
 }
 
-export const updateVitalSignsById = async (tipo_sangre: string, antecedentes_medicos: string, peso: number, pulso: number, presion: number, alergias: number, id_paciente: string) : Promise<QueryResult | any> => {
+export const updateVitalSignsById = async (tipo_sangre: string, antecedentes_medicos: string, peso: number, pulso: number, presion: number, alergias: number, id_paciente: string): Promise<QueryResult | any> => {
 	try {
 		const [rows, _fields] = await db.query(`
             UPDATE 
@@ -139,7 +139,7 @@ export const postPacientRecapDate = async (id_paciente: string, id_dentista: num
             INSERT INTO citas (id_paciente, id_dentista, fecha_cita, motivo, costo_total, observaciones)
             VALUES (?, ?, ?, ?, ?, ?);
             `, [parseInt(id_paciente), id_dentista, fecha_cita, motivo, costo_total, observaciones])
-            console.log(rows)
+		console.log(rows)
 		return rows
 	} catch (error) {
 		return error
