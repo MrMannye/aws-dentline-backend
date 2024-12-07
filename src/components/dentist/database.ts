@@ -15,7 +15,8 @@ export const getNextDatesById = async (idDentist: string) => {
       SELECT 
         pacientes.nombre AS nombre_paciente, 
         pacientes.profesion, 
-        citas.fecha_cita
+        citas.fecha_cita,
+		id_cita
       FROM 
         pacientes
       JOIN 

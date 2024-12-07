@@ -50,20 +50,27 @@ export const getDateByIdDate = async (id_cita: string) => {
 	try {
 		const [rows, _fields] = await db.query(`
             SELECT 
-                c.motivo,
-                c.costo_total,
-                c.fecha_cita,
-                c.abono,
-                c.observaciones,
-                p.nombre,
-                p.telefono,
-                p.email
-            FROM 
-                citas c
-            JOIN 
-                pacientes p ON c.id_paciente = p.id_paciente
-            WHERE 
-                c.id_cita = ?;
+			c.motivo,
+			c.costo_total,
+			c.fecha_cita,
+			c.abono,
+			c.observaciones,
+			p.id_paciente,
+			p.profesion,
+			p.edad,
+			p.nombre,
+			p.telefono,
+			p.email,
+			sv.tipo_sangre,         -- Tipo de sangre del paciente
+			sv.alergias             -- Alergias del paciente
+		FROM 
+			citas c
+		JOIN 
+			pacientes p ON c.id_paciente = p.id_paciente
+		LEFT JOIN 
+			signosvitales sv ON p.id_paciente = sv.id_paciente  -- JOIN con la tabla signosvitales
+		WHERE 
+			c.id_cita = ?;
             `, [id_cita])
 		return rows
 	} catch (error) {
