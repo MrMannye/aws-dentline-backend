@@ -1,4 +1,4 @@
-import { getPacientProfileById, updatePacientProfileById, getHistoryPacientById, getVitalSignsById, updateVitalSignsById, postPacientRecapDate, postPacientRecapDateTreatment, getDateByIdDate, postVitalSignsById } from './database';
+import { getPacientProfileById, updatePacientProfileById, getHistoryPacientById, getVitalSignsById, updateVitalSignsById, postPacientRecapDate, postPacientRecapDateTreatment, getDateByIdDate, postVitalSignsById, postAddNewPacient, deletePacientById} from './database';
 
 const secretKey: string = process.env.SECRET_KEY_PACIENTS || 'jkl_mno_pqr';
 
@@ -109,6 +109,36 @@ export const postRecapDate = async ({ id_paciente, id_dentista, fecha_cita, moti
 		const recapDateTreatment = await postPacientRecapDateTreatment(id_paciente, id_dentista, motivo, costo_total)
 		console.log(recapDate)
 		return [recapDate, recapDateTreatment]
+	} catch (error) {
+		return error
+	}
+}
+
+interface AddPaciente {
+	nombre: string,
+	profesion: string,
+	edad: number,
+	estado_civil: string,
+	fecha_nacimiento: Date,
+	direccion: string,
+	telefono: string,
+	email: string
+	id_dentista : number
+}
+
+export const postAddPacient = async ({ nombre, profesion, edad, estado_civil, fecha_nacimiento, direccion, telefono, email, id_dentista }: AddPaciente) => {
+	try {
+		const newPacient = postAddNewPacient(nombre, profesion, edad, estado_civil, fecha_nacimiento, direccion, telefono, email, id_dentista)
+		return newPacient
+	} catch (error) {
+		return error
+	}
+}
+
+export const deletePaciente = async (idPacient: string) => {
+	try {
+		const deletePacient = deletePacientById(idPacient)
+		return deletePacient
 	} catch (error) {
 		return error
 	}

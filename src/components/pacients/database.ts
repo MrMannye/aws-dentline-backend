@@ -171,3 +171,37 @@ export const postPacientRecapDateTreatment = async (id_paciente: string, id_dent
 		return error
 	}
 }
+
+export const postAddNewPacient = async (
+	nombre: string,
+	profesion: string,
+	edad: number,
+	estado_civil: string,
+	fecha_nacimiento: Date,
+	direccion: string,
+	telefono: string,
+	email: string,
+	id_dentista : number) => {
+	try {
+		const [rows, _fields] = await db.query(`
+            INSERT INTO pacientes (nombre, profesion, edad, estado_civil, fecha_nacimiento, direccion, telefono, email, id_dentista)
+            VALUES (
+                ?, ?, ?, ?, ?, ?, ?, ?, ?
+						);
+            `, [nombre, profesion, edad, estado_civil, fecha_nacimiento, direccion, telefono, email, id_dentista])
+		return rows
+	} catch (error) {
+		return error
+	}
+}
+
+export const deletePacientById = async (id_paciente: string) => {
+	try {
+		const [rows, _fields] = await db.query(`
+            DELETE FROM pacientes WHERE id_paciente = ?;
+            `, [id_paciente])
+		return rows
+	} catch (error) {
+		return error
+	}
+}

@@ -1,5 +1,5 @@
 import express from 'express'
-import { getPacientProfile, putPacientProfile, getHistoryPacient, getVitalSigns, putVitalSigns, postRecapDate, getDateById } from './controller'
+import { getPacientProfile, putPacientProfile, getHistoryPacient, getVitalSigns, putVitalSigns, postRecapDate, getDateById, postAddPacient, deletePaciente} from './controller'
 
 const router = express.Router()
 
@@ -62,6 +62,25 @@ router.post('/postRecapDate', async (req, res) => {
 	try {
 		console.log(req.body)
 		const result = await postRecapDate(req.body)
+		res.status(200).json({ data: result })
+	} catch (error) {
+
+	}
+})
+
+router.post('/addPaciente', async (req, res) => {
+	try {
+		console.log(req.body)
+		const result = await postAddPacient(req.body)
+		res.status(200).json({ data: result })
+	} catch (error) {
+
+	}
+})
+
+router.delete('/deletePaciente/:id', async (req, res) => {
+	try {
+		const result = await deletePaciente(req.params.id)
 		res.status(200).json({ data: result })
 	} catch (error) {
 
