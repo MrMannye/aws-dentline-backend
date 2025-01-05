@@ -1,6 +1,6 @@
 import { CitaRecap } from "../../types"
 import { getDateByIdDate } from "../pacients/database"
-import { getHoursDisableDB, putAbonoDB } from "./database"
+import { getHoursDisableDB, putAbonoDB, putDateDB } from "./database"
 
 export const getHoursDisable = async (date: Date) => {
 	try {
@@ -27,6 +27,20 @@ export const putAbono = async (body: any) => {
 			response: result.affectedRows ? "Abono actualizado" : "No se pudo actualizar el abono",
 			isAbonoEqualCosto: (cita.abono + abono) === cita.costo_total
 		}
+		return result
+	} catch (error) {
+		return error
+	}
+}
+
+interface PutDate {
+	id_cita: string
+	fecha_cita: string
+}
+
+export const putDate = async ({ id_cita, fecha_cita }: PutDate) => {
+	try {
+		const result = await putDateDB(id_cita, fecha_cita)
 		return result
 	} catch (error) {
 		return error

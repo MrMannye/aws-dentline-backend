@@ -181,14 +181,12 @@ export const postAddNewPacient = async (
 	direccion: string,
 	telefono: string,
 	email: string,
-	id_dentista : number) => {
+	id_dentista: number) => {
 	try {
 		const [rows, _fields] = await db.query(`
             INSERT INTO pacientes (nombre, profesion, edad, estado_civil, fecha_nacimiento, direccion, telefono, email, id_dentista)
             VALUES (
-                ?, ?, ?, ?, ?, ?, ?, ?, ?
-						);
-            `, [nombre, profesion, edad, estado_civil, fecha_nacimiento, direccion, telefono, email, id_dentista])
+                ?, ?, ?, ?, ?, ?, ?, ?, ?);`, [nombre, profesion, edad, estado_civil, fecha_nacimiento, direccion, telefono, email, id_dentista])
 		return rows
 	} catch (error) {
 		return error

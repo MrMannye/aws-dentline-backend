@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { getHoursDisable, putAbono } from './controller';
+import { getHoursDisable, putAbono, putDate } from './controller';
 
 const router = express.Router();
 
@@ -26,5 +26,16 @@ router.put('/updateAbono', async (req, res) => {
 	}
 })
 
+router.put('/updateDate', async (req, res) => {
+	try {
+		console.log(req.body)
+		const result = await putDate(req.body)
+		console.log(result)
+		res.status(200).json({ data: result })
+	}
+	catch (error) {
+		res.status(500).json({ error: error })
+	}
+})
 
 export default router;

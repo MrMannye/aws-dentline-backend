@@ -28,3 +28,19 @@ export const putAbonoDB = async (abono: number, id_cita: number) => {
 		return error
 	}
 }
+
+export const putDateDB = async (id_cita: string, fecha_cita: string) => {
+	try {
+		const [rows, _fields] = await db.query(`
+			UPDATE 
+				citas
+			SET 
+				fecha_cita = ?
+			WHERE 
+				id_cita = ?;
+			`, [fecha_cita, id_cita])
+		return rows
+	} catch (error) {
+		return error
+	}
+}

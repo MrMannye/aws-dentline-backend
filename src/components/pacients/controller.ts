@@ -1,4 +1,4 @@
-import { getPacientProfileById, updatePacientProfileById, getHistoryPacientById, getVitalSignsById, updateVitalSignsById, postPacientRecapDate, postPacientRecapDateTreatment, getDateByIdDate, postVitalSignsById, postAddNewPacient, deletePacientById} from './database';
+import { getPacientProfileById, updatePacientProfileById, getHistoryPacientById, getVitalSignsById, updateVitalSignsById, postPacientRecapDate, postPacientRecapDateTreatment, getDateByIdDate, postVitalSignsById, postAddNewPacient, deletePacientById } from './database';
 
 const secretKey: string = process.env.SECRET_KEY_PACIENTS || 'jkl_mno_pqr';
 
@@ -8,7 +8,7 @@ export const getPacientProfile = async (idPacient: string) => {
 
 		// Desencriptar la dirección
 		if (allPacients.direccion) {
-			const bytesDireccion = CryptoJS.AES.decrypt(allPacients.direccion, secretKey); 
+			const bytesDireccion = CryptoJS.AES.decrypt(allPacients.direccion, secretKey);
 			allPacients.direccion = bytesDireccion.toString(CryptoJS.enc.Utf8);
 		}
 
@@ -75,10 +75,13 @@ interface VitalSignsData {
 export const putVitalSigns = async ({ tipo_sangre, antecedentes_medicos, peso, pulso, presion, alergias, id_paciente }: VitalSignsData) => {
 	try {
 		const updateVitalSigns: any = await updateVitalSignsById(tipo_sangre, antecedentes_medicos, peso, pulso, presion, alergias, id_paciente);
+		console.log(updateVitalSigns)
 		if (updateVitalSigns.affectedRows != 0) {
 			return updateVitalSigns;
 		} else {
-			return await postVitalSignsById(tipo_sangre, antecedentes_medicos, peso, pulso, presion, alergias, id_paciente); 
+			const newVital = await postVitalSignsById(tipo_sangre, antecedentes_medicos, peso, pulso, presion, alergias, id_paciente);
+			console.log(newVital)
+			return newVital
 		}
 	} catch (error) {
 		return error
@@ -123,12 +126,13 @@ interface AddPaciente {
 	direccion: string,
 	telefono: string,
 	email: string
-	id_dentista : number
+	id_dentista: number
 }
 
 export const postAddPacient = async ({ nombre, profesion, edad, estado_civil, fecha_nacimiento, direccion, telefono, email, id_dentista }: AddPaciente) => {
 	try {
-		const newPacient = postAddNewPacient(nombre, profesion, edad, estado_civil, fecha_nacimiento, direccion, telefono, email, id_dentista)
+		const newPacient = await postAddNewPacient(nombre, profesion, edad, estado_civil, fecha_nacimiento, direccion, telefono, email, id_dentista)
+		console.log(newPacient)
 		return newPacient
 	} catch (error) {
 		return error
