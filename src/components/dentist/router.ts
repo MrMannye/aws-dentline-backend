@@ -1,5 +1,5 @@
 import express from 'express'
-import { getDentist, postDentist, putDentist, getNextDates, getAllPacients, getAllDates, getAllDatesRecap, getValidDentist } from './controller'
+import { getDentist, postDentist, putDentist, getNextDates, getAllPacients, getAllDates, getAllDatesRecap, getValidDentist, getPatientsCount } from './controller'
 
 const router = express.Router()
 
@@ -74,5 +74,15 @@ router.put('/updateDentist', async (req, res) => {
 
 	}
 })
+
+router.get('/countPatients/:idDentist', async (req, res) => {
+	try {
+		const { idDentist } = req.params; 	
+		const count = await getPatientsCount(idDentist); // Llama al controller
+		res.status(200).json({ count });
+	} catch (error) {
+		res.status(500).json({ error: 'Error al contar los pacientes del dentista' });
+	}
+});
 
 export default router

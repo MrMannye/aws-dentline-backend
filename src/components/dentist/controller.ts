@@ -1,4 +1,4 @@
-import { getDentistById, getNextDatesById, getPacients, addDentist, updateDentistById, getAllDatesById, getAllDatesRecapById, getValidDentistByWallet, addNewDentistByWallet } from "./database"
+import { getDentistById, getNextDatesById, getPacients, addDentist, updateDentistById, getAllDatesById, getAllDatesRecapById, getValidDentistByWallet, addNewDentistByWallet, countPatientsByDentistId } from "./database"
 
 export const getDentist = async (idDentist: string) => {
 	try {
@@ -91,3 +91,12 @@ export const putDentist = async ({ nombre, especializacion, telefono, email, num
 		return error
 	}
 }
+
+export const getPatientsCount = async (idDentist: string): Promise<number> => {
+	try {
+		const count = await countPatientsByDentistId(idDentist); // Llama a la función en database
+		return count;
+	} catch (error) {
+		throw new Error('Error al obtener el conteo de pacientes del dentista');
+	}
+};

@@ -185,8 +185,7 @@ export const postAddNewPacient = async (
 	try {
 		const [rows, _fields] = await db.query(`
             INSERT INTO pacientes (nombre, profesion, edad, estado_civil, fecha_nacimiento, direccion, telefono, email, id_dentista)
-            VALUES (
-                ?, ?, ?, ?, ?, ?, ?, ?, ?);`, [nombre, profesion, edad, estado_civil, fecha_nacimiento, direccion, telefono, email, id_dentista])
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);`, [nombre, profesion, edad, estado_civil, fecha_nacimiento, direccion, telefono, email, id_dentista])
 		return rows
 	} catch (error) {
 		return error
@@ -203,3 +202,16 @@ export const deletePacientById = async (id_paciente: string) => {
 		return error
 	}
 }
+
+export const checkVitalSignsByPacientId = async (idPacient: string) => {
+	try {
+		const [rows, _fields] = await db.query(`
+            SELECT 1 FROM signosvitales
+            WHERE id_paciente = ?
+            LIMIT 1;  -- Solo devuelve una fila si existe
+        `, [idPacient]);
+		return rows;
+	} catch (error) {
+		throw new Error('Error al consultar signos vitales en la base de datos');
+	}
+};

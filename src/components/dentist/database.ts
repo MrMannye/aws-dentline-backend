@@ -145,3 +145,17 @@ export const updateDentistById = async (nombre: string, especializacion: string,
 		return error
 	}
 }
+
+export const countPatientsByDentistId = async (idDentist: string): Promise<any> => {
+	try {
+		const [rows, _fields] = await db.query(`
+            SELECT COUNT(*) AS totalPatients
+            FROM pacientes
+            WHERE id_dentista = ?;
+        `, [idDentist]);
+
+		return rows || 0; // Retorna el conteo de pacientes
+	} catch (error) {
+		throw new Error('Error al consultar la base de datos');
+	}
+};

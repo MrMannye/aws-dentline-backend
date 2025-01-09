@@ -1,4 +1,4 @@
-import { getPacientProfileById, updatePacientProfileById, getHistoryPacientById, getVitalSignsById, updateVitalSignsById, postPacientRecapDate, postPacientRecapDateTreatment, getDateByIdDate, postVitalSignsById, postAddNewPacient, deletePacientById } from './database';
+import { getPacientProfileById, updatePacientProfileById, getHistoryPacientById, getVitalSignsById, updateVitalSignsById, postPacientRecapDate, postPacientRecapDateTreatment, getDateByIdDate, postVitalSignsById, postAddNewPacient, deletePacientById, checkVitalSignsByPacientId } from './database';
 
 const secretKey: string = process.env.SECRET_KEY_PACIENTS || 'jkl_mno_pqr';
 
@@ -147,3 +147,12 @@ export const deletePaciente = async (idPacient: string) => {
 		return error
 	}
 }
+
+export const hasVitalSigns = async (idPacient: string): Promise<boolean> => {
+	try {
+		const vitalSigns:any = await checkVitalSignsByPacientId(idPacient); // Llama a la función de la base de datos
+		return vitalSigns.length > 0; // Retorna true si existen registros, false si no.
+	} catch (error) {
+		throw new Error('Error al verificar signos vitales');
+	}
+};

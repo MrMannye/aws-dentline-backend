@@ -7,7 +7,13 @@ export const getHoursDisable = async (date: Date) => {
 	try {
 		const allHours = await getHoursDisableDB(date)
 		return allHours
-	} catch (error) {
+	} catch (error) {console.log('getHoursDisable function called');
+console.log('putAbono function called');
+console.log('putDate function called');
+console.log('convertirFechaPersonalizada function called');
+console.log('getTokenSMS function called');
+console.log('sendSMS function called');
+
 		return error
 	}
 }

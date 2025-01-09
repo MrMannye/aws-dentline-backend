@@ -1,5 +1,5 @@
 import express from 'express'
-import { getPacientProfile, putPacientProfile, getHistoryPacient, getVitalSigns, putVitalSigns, postRecapDate, getDateById, postAddPacient, deletePaciente } from './controller'
+import { getPacientProfile, putPacientProfile, getHistoryPacient, getVitalSigns, putVitalSigns, postRecapDate, getDateById, postAddPacient, deletePaciente, hasVitalSigns } from './controller'
 
 const router = express.Router()
 
@@ -86,5 +86,16 @@ router.delete('/deletePaciente/:id', async (req, res) => {
 
 	}
 })
+
+router.get('/hasVitalSigns/:id', async (req, res) => {
+	try {
+		const { id } = req.params;
+		const result = await hasVitalSigns(id); // Llama a la función del controller
+		res.status(200).json({ data: result });
+	} catch (error) {
+		res.status(500).json({ error: 'Error al verificar los signos vitales.' });
+	}
+});
+
 
 export default router
