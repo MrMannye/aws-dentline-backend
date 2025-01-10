@@ -38,7 +38,8 @@ export const getVitalSigns = async (idPacient: string) => {
 
 export const getDateById = async (id_cita: string) => {
 	try {
-		const DateByIdDate = getDateByIdDate(id_cita)
+		const DateByIdDate = await getDateByIdDate(id_cita)
+		console.log(DateByIdDate)
 		return DateByIdDate
 	} catch (error) {
 		return error
@@ -150,7 +151,7 @@ export const deletePaciente = async (idPacient: string) => {
 
 export const hasVitalSigns = async (idPacient: string): Promise<boolean> => {
 	try {
-		const vitalSigns:any = await checkVitalSignsByPacientId(idPacient); // Llama a la función de la base de datos
+		const vitalSigns: any = await checkVitalSignsByPacientId(idPacient); // Llama a la función de la base de datos
 		return vitalSigns.length > 0; // Retorna true si existen registros, false si no.
 	} catch (error) {
 		throw new Error('Error al verificar signos vitales');
