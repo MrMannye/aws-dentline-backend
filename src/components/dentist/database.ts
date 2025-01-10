@@ -23,6 +23,7 @@ export const getNextDatesById = async (idDentist: string) => {
         citas ON pacientes.id_paciente = citas.id_paciente
       WHERE 
         DATE(citas.fecha_cita) = CURDATE()
+				AND citas.abono < citas.costo_total
         AND citas.id_dentista = ?`, [idDentist])
 		console.log(rows)
 		return rows

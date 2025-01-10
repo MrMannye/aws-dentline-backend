@@ -52,9 +52,9 @@ export const putDate = async ({ id_cita, fecha_cita, numero_paciente, abono }: P
 	try {
 		console.log(id_cita, fecha_cita, numero_paciente, abono)
 		const result: any = await putDateDB(id_cita, fecha_cita)
-		// if (result.affectedRows) {
-		// 	await sendSMS(id_cita, numero_paciente, abono, fecha_cita)
-		// }
+		if (result.affectedRows) {
+			await sendSMS(id_cita, numero_paciente, abono, fecha_cita)
+		}
 		return result
 	} catch (error) {
 		return error
