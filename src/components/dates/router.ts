@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { getHoursDisable, putAbono, putDate } from './controller';
+import { deleteDate, getHoursDisable, putAbono, putDate } from './controller';
 
 const router = express.Router();
 
@@ -37,5 +37,20 @@ router.put('/updateDate', async (req, res) => {
 		res.status(500).json({ error: error })
 	}
 })
+
+router.delete('/deleteDate/:idDate', async (req, res) => {
+	try {
+		const { idDate } = req.params; // Obtener el id de la cita
+		console.log(idDate);
+		const result = await deleteDate(idDate); // Llamada al controller
+		if (result.affectedRows > 0) {
+			res.status(200).json({ message: 'Cita eliminada exitosamente' });
+		} else {
+			res.status(404).json({ message: 'Cita no encontrada' });
+		}
+	} catch (error) {
+		res.status(500).json({ error: error });
+	}
+});
 
 export default router;

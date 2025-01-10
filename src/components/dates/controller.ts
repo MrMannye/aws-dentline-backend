@@ -1,18 +1,19 @@
 import { CitaRecap } from "../../types"
 import { getDateByIdDate } from "../pacients/database"
-import { getHoursDisableDB, putAbonoDB, putDateDB } from "./database"
+import { deleteDateById, getHoursDisableDB, putAbonoDB, putDateDB } from "./database"
 import axios from "axios"
 
 export const getHoursDisable = async (date: Date) => {
 	try {
 		const allHours = await getHoursDisableDB(date)
 		return allHours
-	} catch (error) {console.log('getHoursDisable function called');
-console.log('putAbono function called');
-console.log('putDate function called');
-console.log('convertirFechaPersonalizada function called');
-console.log('getTokenSMS function called');
-console.log('sendSMS function called');
+	} catch (error) {
+		console.log('getHoursDisable function called');
+		console.log('putAbono function called');
+		console.log('putDate function called');
+		console.log('convertirFechaPersonalizada function called');
+		console.log('getTokenSMS function called');
+		console.log('sendSMS function called');
 
 		return error
 	}
@@ -150,3 +151,13 @@ export const sendSMS = async (id_cita: string, numero: string, abono: string, fe
 		return error;
 	}
 }
+
+export const deleteDate = async (idDate: string): Promise<any> => {
+	try {
+		const result = await deleteDateById(idDate); // Llamada a la función en database
+		console.log(result);
+		return result; // Devuelve el resultado de la eliminación
+	} catch (error) {
+		throw error;
+	}
+};
