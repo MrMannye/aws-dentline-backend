@@ -18,7 +18,6 @@ const config: CoDiConfig = {
 	paymentAccount: '638180010182916776',
 };
 
-
 dotenv.config()
 
 const app = express()
