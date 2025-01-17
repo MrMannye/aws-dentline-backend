@@ -1,5 +1,7 @@
 import db from "../../database"
 
+const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY || 'your_secret_key'; // Llave de encriptación (32 caracteres)
+
 export const getHoursDisableDB = async (date: Date) => {
 	try {
 		console.log(date)
@@ -57,3 +59,21 @@ export const deleteDateById = async (idDate: string) => {
 		throw error;
 	}
 };
+
+export const putMotivoDB = async (motivo: string, id_cita: string, costo_total: number) => {
+	try {
+		const [rows, _fields] = await db.query(`
+			UPDATE 
+				citas
+			SET 
+				motivo = AES_ENCRYPT(?, ?),
+				costo_total = ?
+			WHERE 
+				id_cita = ?;
+			`, [motivo, ENCRYPTION_KEY, costo_total, id_cita])
+		console.log(rows)
+		return rows
+	} catch (error) {
+		return error
+	}
+}

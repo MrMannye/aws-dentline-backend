@@ -1,6 +1,6 @@
 import { CitaRecap } from "../../types"
 import { getDateByIdDate } from "../pacients/database"
-import { deleteDateById, getHoursDisableDB, putAbonoDB, putDateDB } from "./database"
+import { deleteDateById, getHoursDisableDB, putAbonoDB, putDateDB, putMotivoDB } from "./database"
 import axios from "axios"
 
 export const getHoursDisable = async (date: Date) => {
@@ -161,3 +161,20 @@ export const deleteDate = async (idDate: string): Promise<any> => {
 		throw error;
 	}
 };
+
+interface PutMotivo {
+	motivo: string
+	id_cita: string
+	costo_total: number
+}
+
+export const putMotivo = async ({ motivo, id_cita, costo_total }: PutMotivo): Promise<any> => {
+	try {
+		console.log(motivo, id_cita, costo_total)
+		const result = await putMotivoDB(motivo, id_cita, costo_total)
+		console.log(result)
+		return result
+	} catch (error) {
+		return error
+	}
+}
